@@ -8,7 +8,9 @@ import ipdb
 
 class LogisticRegression(LinearClassifier):
 
-    def __init__(self,regularizer=1):
+    def __init__(self,learning_rate=1,regularizer=1):
+        # Velocidad de aprendizaje
+        self.learning_rate = learning_rate
         # Hiperparametro de regularizacion
         self.regularizer = regularizer
         # Parametros
@@ -19,8 +21,13 @@ class LogisticRegression(LinearClassifier):
         self.M = 0
         # Numero de clases
         self.nr_c = 0
+        # Flag si esta entrenado
+        self.trained = False
+        self._iter_cnt = 0
+
         
     def train(self,x,y):
+        x_orig = x.copy()
         x = self.add_intercept_term(x)
         self.N,self.M = x.shape
         classes = np.unique(y)
@@ -28,55 +35,56 @@ class LogisticRegression(LinearClassifier):
         for _class in classes:
             print("Optimizando para clase %i..." % _class)
             ## Reformatear Y
-            _y = (y==_class).astype(int)
+            y_class = (y==_class).astype(int)
 
             ## Inicializacion de parametros 
-            init_parameters = np.zeros(self.M,dtype=float)
+            init_parameters = np.random.randn(self.M,1)
             # Opminizacion
-            w_class = self.minimize_lbfgs(init_parameters,x,_y)
+            w_class = self.minimize_lbfgs(init_parameters,x,y_class)
             self.w.append(w_class)
         self.w = np.hstack(self.w)
-
         self.trained = True
+
+        y_pred = self.test(x_orig,self.w)
+        acc = self.evaluate(y,y_pred)
+        print("Accuracy: %.2f" % acc)
         
 
     def minimize_lbfgs(self,parameters,x,y):
+        parameters2 = parameters.reshape([self.M],order="F")
         # minimizador L-BFGS-B
-        result,_,_ = opt2.fmin_l_bfgs_b(self.get_objective,parameters,args=[x,y])
-        return result.reshape([-1,1])
+        result,_,_ = opt2.fmin_l_bfgs_b(self.get_objective,parameters2,args=[x,y],maxiter=50)
+        return result.reshape([-1,1],order="F")
 
-    def sigmoid(self,z):
-        return 1.0 / (1.0 + np.exp(-z))
+    def hyphotesis(self,x,w):
+        return 1.0 / (1.0 + np.exp(-np.dot(x,w)))
 
-    ############
-    ### Obj =  -sum_(x,y) p(y|x) + sigma*||w||_2^2
-    ### Obj = \sum_(x,y) -w*x + log(\sum_(y') exp(w*x)) +  sigma*||w||_2^2
-    ############
+
     def get_objective(self,w,x,y):
         #w = parameters.reshape([M,nr_c],order="F")
         w = w.reshape([self.M,1],order='F')
         ## Cost function
-        acum_objective = np.sum( np.dot(    y.T, np.log(self.sigmoid(np.dot(x,w)))   ) + \
-                                 np.dot((1-y).T, np.log(1-self.sigmoid(np.dot(x,w))) )   )
-
+        acum_objective = np.dot(y.ravel(), np.log(self.hyphotesis(x,w)).ravel() ) + \
+                         np.dot((1-y).ravel(), np.log(1-self.hyphotesis(x,w).ravel()+1e-12))
         
-        objective = -(1.0/self.N)*acum_objective + 0.5*self.regularizer*l2norm_squared(w)
+        objective = -(1.0/self.N)*(acum_objective - 0.5*self.regularizer*l2norm_squared(w))
         
         ## Gradient
-        
-        #gradient = -(1.0/self.N)*self.regularizer*np.dot(x.T,(self.sigmoid(np.dot(x,w))-y)) + self.regularizer*w
-        #gradient = gradient.reshape(-1,order='F')
+        gradient = (1.0/self.N)*(self.learning_rate*np.dot(x.T,self.hyphotesis(x,w)-y) + self.regularizer*w)
+        gradient = gradient.reshape(-1,order='F')
+        """
         gradient = np.zeros(self.M)
 
         for j in range(self.M):
             _sum = 0
             for i in range(self.N):
-                _sum += (self.sigmoid(np.dot(x[i,:],w))-y[i,0]) * x[i,j]
-            gradient[j] = -(1.0/self.N)*self.regularizer*_sum + self.regularizer*w[j,0]
-        
+                _sum += (self.hyphotesis(x[i,:],w)-y[i,0]) * x[i,j]
+            gradient[j] = (1.0/self.N)*(self.learning_rate*_sum + self.regularizer*w[j,0])
+        """
 
         #ipdb.set_trace()
-
-        print("Objective = %.3f" % objective)
+        self._iter_cnt+=1
+        if self._iter_cnt%10 == 0:
+            print("Objective = %.4f" % objective)
         return objective,gradient
     
