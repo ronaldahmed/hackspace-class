@@ -28,6 +28,12 @@ class Perceptron(LinearClassifier):
         ####
         # inserte codigo aqui
         ###
+        y_pred = self.get_label(x,w)
+        # w = w + self.learning_rate*gradiente
+        if y_pred!=y:
+             w[:,y] += self.learning_rate*x.T
+             w[:,y_pred] -= self.learning_rate*x.T
+
         return w
 
     def train(self,X,Y):
