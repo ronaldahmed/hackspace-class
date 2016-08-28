@@ -64,12 +64,10 @@ class LogisticRegression(LinearClassifier):
         #w = parameters.reshape([M,nr_c],order="F")
         w = w.reshape([self.M,1],order='F')
         ## Cost function
-        
         objective = 
         
         ## Gradient
         gradient = 
-        
         
         self._iter_cnt+=1
         if self._iter_cnt%10 == 0:
