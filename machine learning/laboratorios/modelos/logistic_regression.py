@@ -64,25 +64,13 @@ class LogisticRegression(LinearClassifier):
         #w = parameters.reshape([M,nr_c],order="F")
         w = w.reshape([self.M,1],order='F')
         ## Cost function
-        acum_objective = np.dot(y.ravel(), np.log(self.hyphotesis(x,w)).ravel() ) + \
-                         np.dot((1-y).ravel(), np.log(1-self.hyphotesis(x,w).ravel()+1e-12))
         
-        objective = -(1.0/self.N)*(acum_objective - 0.5*self.regularizer*l2norm_squared(w))
+        objective = 
         
         ## Gradient
-        gradient = (1.0/self.N)*(self.learning_rate*np.dot(x.T,self.hyphotesis(x,w)-y) + self.regularizer*w)
-        gradient = gradient.reshape(-1,order='F')
-        """
-        gradient = np.zeros(self.M)
-
-        for j in range(self.M):
-            _sum = 0
-            for i in range(self.N):
-                _sum += (self.hyphotesis(x[i,:],w)-y[i,0]) * x[i,j]
-            gradient[j] = (1.0/self.N)*(self.learning_rate*_sum + self.regularizer*w[j,0])
-        """
-
-        #ipdb.set_trace()
+        gradient = 
+        
+        
         self._iter_cnt+=1
         if self._iter_cnt%10 == 0:
             print("Objective = %.4f" % objective)
