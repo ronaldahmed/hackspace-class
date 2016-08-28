@@ -28,16 +28,35 @@ for filename in gb.glob('datasets/texto/*.txt'):
 
 ## 2) preprocess
 # armar vocabulario
+vocabulary = set()
+for doc in x_dataset:
+	for word in doc:
+		if word not in stopword:
+			stem = Stem(word)
+			vocabulary.add(word)
+vocabulary = list(vocabulary)
+V = len(vocabulary)
 
 # vectorizar documentos
 X = []
 for doc in x_dataset:
-	
-	x_i = np.zeros(len(vocabulario))
+	x_i = np.zeros(V)
 	for word in doc:
 		#  1: palabra presente
+		word_id = vocabulary.index(word)
+		x_i[word_id] = 1.0
 	X.append( x_i )
+ipdb.set_trace()
 
 
 ## 3) Dividir en training, test
 xtrain,xtest,ytrain,ytest = train_test_split(X,Y,test_size=0.2,random_state=42)
+
+
+
+
+
+
+
+
+
