@@ -1,0 +1,5 @@
+*.pyc
+*~
+*.*~
+machine learning/laboratorios/__pycache__/*
+machine learning/laboratorios/.ipynb_checkpoints/*
