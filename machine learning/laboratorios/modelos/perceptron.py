@@ -1,5 +1,5 @@
 import numpy as np
-from modelos.linear_classifier import LinearClassifier
+from linear_classifier import LinearClassifier
 
 
 class Perceptron(LinearClassifier):
@@ -25,12 +25,12 @@ class Perceptron(LinearClassifier):
         @param w [M x num clases] : parámetros actuales del modelo
         return : w [M x num clases] : parámetros actualizados con instancia actual
         '''
-        ####
-        # inserte codigo aqui
-        ###
-        y_pred = self.get_label(x,w)
-
-        # w = w + self.learning_rate*gradiente
+        y_hat = self.get_label(x,w)
+        if(y != y_hat):
+            #Increase features of the truth
+            w[:,y]     += self.learning_rate*x.transpose()
+            #Decrease features of the prediction
+            w[:,y_hat] += -1*self.learning_rate*x.transpose()
 
         return w
 
