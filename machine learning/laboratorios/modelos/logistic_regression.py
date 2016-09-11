@@ -63,20 +63,10 @@ class LogisticRegression(LinearClassifier):
     def get_objective(self,w,x,y):
         #w = parameters.reshape([M,nr_c],order="F")
         w = w.reshape([self.M,1],order='F')
-        
         N,M = x.shape
         ## Cost function
-        h = self.hyphotesis(x,w)
-        sum_int = np.dot(y.T,np.log(h)) + np.dot(1-y.T,np.log(1-h+1e-8))
-        # [[number]]
-        sum_int = sum_int.sum() # number
 
-        objective = -1/N * sum_int + (self.regularizer/(2*N)) * l2norm_squared(w)
         ## Gradient
-        gradient = (1/N) * (np.dot(x.T,h-y) + self.regularizer*w)
-        gradient = gradient.reshape([self.M],order="F")
-        
-        #ipdb.set_trace()
 
         self._iter_cnt+=1
         if self._iter_cnt%10 == 0:

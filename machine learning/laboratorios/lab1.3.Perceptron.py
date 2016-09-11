@@ -34,8 +34,8 @@ print("Muestras en testing set:  %i" % Xtest.shape[0])
 
 #################################################################################
 # Configuracion de modelo
-nr_epochs = 20
-learning_rate = 1.0
+nr_epochs = 10
+learning_rate = 0.1
 averaged = True
 
 # Inicializamos modelo
