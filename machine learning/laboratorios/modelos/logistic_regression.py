@@ -64,9 +64,19 @@ class LogisticRegression(LinearClassifier):
         #w = parameters.reshape([M,nr_c],order="F")
         w = w.reshape([self.M,1],order='F')
         N,M = x.shape
-        ## Cost function
 
-        ## Gradient
+        ## Cost function: L
+        h = self.hyphotesis(x,w)
+        objective = np.dot(    y.T , np.log(h + 1e-10)  ) + \
+                    np.dot((1-y).T , np.log(1-h + 1e-10))
+        objective /= -N
+        objective = objective[0][0]
+
+        ## Gradient:  delta_L
+        gradient = np.dot( x.T, h-y)
+        gradient /= N
+
+        gradient = gradient.reshape(-1,order='F')
 
         self._iter_cnt+=1
         if self._iter_cnt%10 == 0:
