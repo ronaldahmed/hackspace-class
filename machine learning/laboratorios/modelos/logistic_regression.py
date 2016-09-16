@@ -38,7 +38,8 @@ class LogisticRegression(LinearClassifier):
             y_class = (y==_class).astype(int)
 
             ## Inicializacion de parametros 
-            init_parameters = np.random.randn(self.M,1)
+            #init_parameters = np.random.randn(self.M,1)
+            init_parameters = np.zeros([self.M,1])
             # Opminizacion
             w_class = self.minimize_lbfgs(init_parameters,x,y_class)
             self.w.append(w_class)
@@ -72,8 +73,11 @@ class LogisticRegression(LinearClassifier):
         objective /= -N
         objective = objective[0][0]
 
+        l2 = np.linalg.norm(w)
+        objective += self.regularizer * (l2**2) / (2.0*N)
+
         ## Gradient:  delta_L
-        gradient = np.dot( x.T, h-y)
+        gradient = np.dot( x.T, h-y) - self.regularizer * w
         gradient /= N
 
         gradient = gradient.reshape(-1,order='F')

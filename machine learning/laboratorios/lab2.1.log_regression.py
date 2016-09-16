@@ -37,7 +37,7 @@ print("Muestras en testing set:  %i" % Xtest.shape[0])
 #################################################################################
 # Configuracion de modelo
 learning_rate = 1.0 # alpha
-regularizer = 0.0
+regularizer = 1.0
 
 # Inicializamos modelo
 lr = LogisticRegression(learning_rate=learning_rate,
