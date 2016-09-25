@@ -14,7 +14,7 @@ sc = SentimentCorpus(test_perc=test_perc,
 
 
 # Inicializar modelo
-smoothing = 1.1
+smoothing = 0.1
 model = mnb.MultinomialNaiveBayes(smooth=smoothing)
 # Entrenamiento
 params = model.train(sc.X_train,sc.Y_train)

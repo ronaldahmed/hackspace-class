@@ -4,6 +4,7 @@ import modelos.linear_classifier as lc
 import sys
 from distribuciones.gaussian import *
 from distribuciones.multinomial import *
+import ipdb
 
 
 class MultinomialNaiveBayes(lc.LinearClassifier):
@@ -26,12 +27,25 @@ class MultinomialNaiveBayes(lc.LinearClassifier):
         n_classes = classes.shape[0]
         
         # Inicializacion del Prior y variables de Likelihood
+        #  P(Y)
         prior = np.zeros(n_classes)
+        #  P(w_j|y)
         likelihood = np.zeros((n_words,n_classes))
 
+
         ###########################
-        # Code to be deleted
-        for i in range(n_classes):
+        for c in range(n_classes):
+            Nc,_ = np.nonzero(y==c)
+            prior[c] = 1.0*len(Nc) / n_docs
+            
+            words_count = np.zeros(n_words)
+            for doc_id in Nc:
+               words_count += x[doc_id,:]
+
+            total_word_per_class = sum(x[Nc,:])
+
+            likelihood[:,c] = (words_count + self.smooth_param) / \
+                         (total_word_per_class + n_words*self.smooth_param)
 
         ###########################
 
@@ -43,3 +57,7 @@ class MultinomialNaiveBayes(lc.LinearClassifier):
         self.prior = prior
         self.trained = True
         return params
+
+
+
+

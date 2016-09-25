@@ -32,8 +32,6 @@ class SentimentCorpus:
         self.Y_test  = y_test
 
 
-        
-
     def read_corpus(self):
         vocab = {}
         corpus_y = []
@@ -67,6 +65,7 @@ class SentimentCorpus:
         corpus = [xy[0] for xy in corpus_y]
         y = np.array([xy[1] for xy in corpus_y])
         y = np.reshape(y,[-1,1])
+
         return corpus,y
 
     def build_features(self,corpus):
@@ -104,4 +103,13 @@ class SentimentCorpus:
                 feat_id = self.feat_dict[token]
                 X[i,feat_id] = freq
         return X
+
+
+
+
+
+
+
+
+
 
