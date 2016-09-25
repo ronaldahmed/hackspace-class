@@ -3,7 +3,7 @@ from nltk.stem.snowball import SnowballStemmer
 from nltk.probability import *
 from nltk import UnigramTagger, BigramTagger, TrigramTagger
 from sklearn.cross_validation import train_test_split
-import readers.ancora
+import readers.ancora as ancora
 import ipdb
 
 ##########################################################################
@@ -25,7 +25,11 @@ def lidstone(gamma):
 if __name__== "__main__":
     print("Leyendo data...")
     reader = ancora.AncoraCorpusReader()
-    data = reader.ne_tagged_sents()[:100]
+    data = reader.ne_tagged_sents()
+
+    ipdb.set_trace()
+
+    data = data[:100]
 
     test_perc = 0.2
     train_set,test_set = train_test_split(data,test_size=test_perc,random_state=42)
