@@ -27,15 +27,19 @@ for filename in gb.glob('datasets/texto/*.txt'):
 	
 
 ## 2) preprocess
+import nltk
+stopword = nltk.corpus.stopwords.words('spanish')
+
 # armar vocabulario
 vocabulary = set()
 for doc in x_dataset:
 	for word in doc:
 		if word not in stopword:
-			stem = Stem(word)
 			vocabulary.add(word)
 vocabulary = list(vocabulary)
 V = len(vocabulary)
+
+ipdb.set_trace()
 
 # vectorizar documentos
 X = []

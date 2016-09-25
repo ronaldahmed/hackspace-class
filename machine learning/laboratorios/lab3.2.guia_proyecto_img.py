@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from sklearn.cross_validation import train_test_split
 from scipy import misc
 from skimage import color, exposure
-from skimage.filter import gaussian
+#from skimage.filter import gaussian
 import warnings
 import glob as gb
 
@@ -40,17 +40,34 @@ for img in x_dataset:
    # 2.2. Ecualizar imagen
    eq = exposure.equalize_hist(gray_img)
    # 2.3. Algun filtro
-   blur = gaussian(eq,sigma=1)
    # binarizar imagen
-   bin_img = (blur>blur.mean()).astype(int)
-   plot_image(blur)
+   bin_img = (eq>eq.mean()).astype(int)
+
    plot_image(bin_img)
+   #plot_image(bin_img)
    # 2.4. Aplanar imagen
    X.append( np.reshape(bin_img,[-1]) )
-   ipdb.set_trace()
+
+
 
 ## 3) Dividir en training, test
 xtrain,xtest,ytrain,ytest = train_test_split(X,Y,test_size=0.2,random_state=42)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

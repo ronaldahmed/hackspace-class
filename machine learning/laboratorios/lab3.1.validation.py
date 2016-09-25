@@ -13,16 +13,9 @@ from sklearn. linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier as RF
 from sklearn.cross_validation import train_test_split
 from sklearn import datasets
- 
 
 warnings.filterwarnings("ignore")
 ##################################################################################################
-
-def plot_sample(x):
-   plt.figure()
-   plt.imshow(np.reshape(x,[8,8]),cmap='gray')
-   plt.axis('off')
-   plt.show()
 
  
 def run_classifier(model,Xtrain,Ytrain, Xtest, Ytest, parameters={}, classes=[]):
@@ -35,14 +28,6 @@ def run_classifier(model,Xtrain,Ytrain, Xtest, Ytest, parameters={}, classes=[])
     print(gridCV.best_params_)
     
     pred_test = gridCV.predict(Xtest)
-    ids_error = Ytest!=pred_test
-    for i in range(Xtest.shape[0]):
-       if ids_error[i]:
-          print('Ytrue= ',classes[Ytest[i]])
-          print('Ypred= ',classes[pred_test[i]])
-          print('.............')
-          plot_sample(X[i,:])
-
 
     print("Metrics Testing data...")
     print(classification_report(Ytest, pred_test, target_names=classes))
@@ -77,7 +62,7 @@ if __name__ == '__main__':
     print("##################   Logistic Regression ################")
     logreg = LogisticRegression()
 
-    parameters = {'C':[0.005,0.008,0.01,0.015,0.02,0.05]}
+    parameters = {'C':[.005,0.008,0.01,0.015,0.02]}
      
     best_params = run_classifier(logreg, X_train, Y_train, X_test, Y_test, parameters, classes)
     
@@ -104,3 +89,19 @@ if __name__ == '__main__':
         max_depth=[None,10,20],
     )
     best_params = run_classifier(rf, X_train, Y_train, X_test, Y_test, parameters, classes)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
