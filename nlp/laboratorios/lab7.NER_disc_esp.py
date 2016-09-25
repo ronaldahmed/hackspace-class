@@ -3,7 +3,7 @@ from nltk.stem.snowball import SnowballStemmer
 from nltk.probability import *
 from nltk import UnigramTagger, BigramTagger, TrigramTagger
 from sklearn.cross_validation import train_test_split
-import ancora
+import readers.ancora as ancora
 from modelos.seq_classifier import ConsecutiveNERTagger
 import ipdb
 
