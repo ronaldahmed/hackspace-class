@@ -27,7 +27,7 @@ if __name__== "__main__":
     reader = ancora.AncoraCorpusReader()
     data = reader.ne_tagged_sents()
 
-    ipdb.set_trace()
+    #ipdb.set_trace()
 
     data = data[:100]
 
@@ -56,7 +56,7 @@ if __name__== "__main__":
     gtt = hmm_trainer.train_supervised(train_set, estimator = gt)
 
     print("  Estimador: Lidstone...")
-    lds = hmm_trainer.train_supervised(train_set, estimator = lidstone(0.8))
+    lds = hmm_trainer.train_supervised(train_set, estimator = lidstone(1))
     
     ####################################################################################
     print("Evaluando modelos...")

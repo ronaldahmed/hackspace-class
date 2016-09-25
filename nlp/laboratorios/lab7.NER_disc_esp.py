@@ -23,5 +23,5 @@ if __name__== "__main__":
 
     model = ConsecutiveNERTagger(train_set)
 
-    print("Test ACC:%.4f" % model.evaluate(test_set)*100)
+    print("Test ACC:%.4f\n" % model.evaluate(test_set)*100)
     

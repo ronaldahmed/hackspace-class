@@ -132,8 +132,8 @@ class AncoraCorpusReader(SyntaxCorpusReader):
     #def __init__(self, xmlreader):
     #    self.xmlreader = xmlreader
     def __init__(self, path='datasets/ancora-2.0/'):
-        self.xmlreader = xmldocs.XMLCorpusReader(path + 'TODO', '.*\.xml')
-        #self.xmlreader = xmldocs.XMLCorpusReader(path + '3LB-CAST', '.*\.xml')
+        #self.xmlreader = xmldocs.XMLCorpusReader(path + 'TODO', '.*\.xml')
+        self.xmlreader = xmldocs.XMLCorpusReader(path + '3LB-CAST', '.*\.xml')
     
     def joinSentences(self,fun, max_docs='inf'):
         fileids = self.xmlreader.fileids()
