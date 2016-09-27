@@ -25,7 +25,11 @@ def lidstone(gamma):
 if __name__== "__main__":
     print("Leyendo data...")
     reader = ancora.AncoraCorpusReader()
-    data = reader.ne_tagged_sents()[:100]
+    data = reader.ne_tagged_sents()
+
+    #ipdb.set_trace()
+
+    data = data[:100]
 
     test_perc = 0.2
     train_set,test_set = train_test_split(data,test_size=test_perc,random_state=42)
@@ -52,7 +56,7 @@ if __name__== "__main__":
     gtt = hmm_trainer.train_supervised(train_set, estimator = gt)
 
     print("  Estimador: Lidstone...")
-    lds = hmm_trainer.train_supervised(train_set, estimator = lidstone(0.8))
+    lds = hmm_trainer.train_supervised(train_set, estimator = lidstone(1))
     
     ####################################################################################
     print("Evaluando modelos...")
