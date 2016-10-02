@@ -5,6 +5,7 @@ from nltk import tree
 from nltk.util import LazyMap
 from nltk.corpus.reader.util import concat
 import ipdb
+from readers.utils import simplify_tagset
 
 def pos_lemma(element):
     if element:
@@ -63,8 +64,8 @@ def parsed(element):
         if element.get('elliptic') == 'yes':
             return None
         else:
-            #return tree.Tree(element.get('pos') or element.get('ne') or 'unk', [element.get('wd')])
-            return tree.Tree(element.get('pos') or 'unk', [element.get('wd')])
+            return tree.Tree(simplify_tagset(element.get('pos')) or element.get('ne') or 'unk', [element.get('wd')])
+            #return tree.Tree(element.get('pos') or 'unk', [element.get('wd')])
 
 
 def tagged(element):
