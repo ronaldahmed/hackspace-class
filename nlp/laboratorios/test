@@ -1,7 +1,0 @@
-(sentence (sadv+grup.adv+ADV Tal_vez) (sentence|<S-fp> (S (sn+grup.nom+PRON eso) (S|<grup.verb+VB-sn> (grup.verb+VB fuera) (sn (spec+DET lo) (grup.nom+s.a+grup.a+ADJ peor)))) (fp .))) (p=2.43425e-16)
-(sentence (neg+ADV No) (sentence|<morfema.pronominal+PRON-grup.verb+VB-fp> (morfema.pronominal+PRON se) (sentence|<grup.verb+VB-fp> (grup.verb+VB arrepentirá) (fp .)))) (p=1.06676e-06)
-(sentence (fg -) (sentence|<sp-fa> (sp (prep+PREP Por) (sn+grup.nom+PRON qué)) (fa ?))) (p=1.96832e-07)
-(sentence (S (conj+CC Y) (neg+ADV no)) (fp .)) (p=3.08912e-06)
-(sentence (conj+CC Pero) (sentence|<S-fp> (S (fg -) (S|<sp-fa> (sp (prep+PREP en) (sn+grup.nom (PRON cuál) (sp (prep+PREP de) (sn+grup.nom+PRON ellos)))) (fa ?))) (fp .))) (p=2.2439e-15)
-(sentence (sadv+grup.adv+ADV Ya) (sentence|<S-fp> (S (grup.verb+VB es) (sadv+grup.adv+ADV mucho)) (fp .))) (p=5.87779e-10)
-(sentence (fg -) (sentence|<fg-sn+grup.nom+NP-fp> (fg -) (sentence|<sn+grup.nom+NP-fp> (sn+grup.nom+NP Trinidad_y_Tobago) (fp .)))) (p=2.73281e-05)

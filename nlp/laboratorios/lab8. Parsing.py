@@ -11,6 +11,26 @@ no_dup_spaces = re.compile('\s+')
 no_bl = re.compile('\n')
 
 ##########################################################################
+RARE = '<RARE>'
+THR = 3
+
+def replace_leave(tree, vocab):
+    if len(tree)>1:
+        for subtree in tree:
+            replace_leave(subtree,vocab)
+    else:
+        if type(tree[0])!=str:
+            replace_leave(tree[0],vocab)
+        else:
+            word = tree[0]
+            if word not in vocab:
+                word = RARE
+            if word in vocab:
+                if vocab[word]<THR:
+                    word = RARE
+            tree[0] = word
+    return
+
 
 if __name__== "__main__":
     print("Leyendo data...")
@@ -25,9 +45,20 @@ if __name__== "__main__":
         t.collapse_unary(collapsePOS=True)
         t.chomsky_normal_form()
     
+
     # dividiendo data
     test_perc = 0.2
     train_set,test_set = train_test_split(treebank,test_size=test_perc,random_state=42)
+
+    vocab = []
+    for t in train_set:
+        vocab += t.leaves()
+    vocab = nltk.FreqDist(vocab)
+
+    for t in train_set:
+        replace_leave(t,vocab)
+    for t in test_set:
+        replace_leave(t,vocab)
 
     # Obtener reglas
     print("Leyendo reglas...")
