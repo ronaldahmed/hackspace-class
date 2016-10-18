@@ -1,6 +1,7 @@
 import modelos.multinomial_naive_bayes as mnb
 from readers.sentiment_reader import SentimentCorpus
 from sklearn.metrics import classification_report, accuracy_score
+import ipdb
 
 
 # Leyendo y procesando corpus
@@ -14,10 +15,12 @@ sc = SentimentCorpus(test_perc=test_perc,
 
 
 # Inicializar modelo
-smoothing = 0.1
+smoothing = 1.0
 model = mnb.MultinomialNaiveBayes(smooth=smoothing)
 # Entrenamiento
 params = model.train(sc.X_train,sc.Y_train)
+
+
 
 # Evaluacion Train dataset
 Ytrain_pred = model.test(sc.X_train,params)

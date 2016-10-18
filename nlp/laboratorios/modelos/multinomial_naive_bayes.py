@@ -35,7 +35,15 @@ class MultinomialNaiveBayes(lc.LinearClassifier):
 
         ###########################
         for c in range(n_classes):
-            continue
+            docs_in_class,_ = np.nonzero(y==c)
+            prior[c] = 1.0*len(docs_in_class) / n_docs # P(y=c)
+            
+            words_in_class = x[docs_in_class].sum(0) # sum de freq en docs de clase c
+            total_words_in_class = x[docs_in_class].sum() # total de freq en docs de clase c
+
+            likelihood[:,c] = (self.smooth_param + words_in_class) / \
+                              (self.smooth_param*n_words + total_words_in_class)
+            
 
         ###########################
 
@@ -47,6 +55,13 @@ class MultinomialNaiveBayes(lc.LinearClassifier):
         self.prior = prior
         self.trained = True
         return params
+
+
+
+
+
+
+
 
 
 
