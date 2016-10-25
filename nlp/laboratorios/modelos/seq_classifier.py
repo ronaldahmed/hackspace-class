@@ -39,11 +39,53 @@ def npchunk_features(sentence, i, history):
     word, pos = sentence[i]
     feature_dict = {}
     # features de transicion
-	 ####
+	####
+    # transicion inicial
+    if i==1:
+        feature_dict['trans_ini'] = history[i-1]
+    elif i>2:
+        # transicion
+        feat_name = history[i-2]+'::'+history[i-1]
+        feature_dict['trans'] = feat_name
+        
+        # trancision final
+        if i==len(sentence)-1:
+            feature_dict['trans_fin'] = history[i-1]
 
     #features de emision
 	 ####
+    if i>0:
+        feat_name =    word +'::'+ history[i-1]
+    else:
+        feat_name = word
+    feature_dict['emision'] = feat_name
+
+    #  emision de sufijos
+    for degree in range(1,4):
+        suffix = word[-degree:]
+        if i>0:
+            feat_name = suffix + '::'+history[i-1]
+        else:
+            feat_name = suffix
+        feature_dict['emis_suff_'+str(degree)] = feat_name
+    
+    # emision de ortografia
+    if re.search('[A-Z].*',word):
+        feature_dict['ort'] = 'prim_mayus'
+    if re.search('[A-Z]+',word):
+        feature_dict['ort'] = 'todo_mayus'
+
     return feature_dict
+
+
+
+
+
+
+
+
+
+
 
 
 

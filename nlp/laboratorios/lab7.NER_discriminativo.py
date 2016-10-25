@@ -17,6 +17,8 @@ if __name__== "__main__":
     print("Leyendo data...")
     reader = ancora.AncoraCorpusReader()
     data = reader.pos_ne_tagged_sents()[:100]
+    
+    #ipdb.set_trace()
 
     test_perc = 0.2
     train_set,test_set = train_test_split(data,test_size=test_perc,random_state=42)

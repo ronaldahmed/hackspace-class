@@ -29,13 +29,15 @@ if __name__== "__main__":
 
     #ipdb.set_trace()
 
-    data = data[:100]
+    #data = data[:100]
 
     test_perc = 0.2
     train_set,test_set = train_test_split(data,test_size=test_perc,random_state=42)
 
     states_set  = list(set([tag for sent in data for (word,tag) in sent]))
     vocab = list(set([word for sent in train_set for (word,tag) in sent]))
+
+    #ipdb.set_trace()
 
     hmm_trainer = nltk.HiddenMarkovModelTrainer(states_set,vocab)
 
@@ -56,7 +58,7 @@ if __name__== "__main__":
     gtt = hmm_trainer.train_supervised(train_set, estimator = gt)
 
     print("  Estimador: Lidstone...")
-    lds = hmm_trainer.train_supervised(train_set, estimator = lidstone(1))
+    lds = hmm_trainer.train_supervised(train_set, estimator = lidstone(1.0))
     
     ####################################################################################
     print("Evaluando modelos...")

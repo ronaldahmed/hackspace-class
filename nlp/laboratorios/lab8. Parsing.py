@@ -85,16 +85,7 @@ if __name__== "__main__":
 
     # definir parser
     parser = nltk.InsideChartParser(grammar)
-    #parser.trace(2)
 
-    """
-    test = 'el perro ladra'.split()
-
-    res = parser.parse(test)
-    for t in res:
-        print(t)
-        t.draw()
-    """
     print("Guardando predicciones para evaluacion...")
     gold = open('gold','w')
     test = open('test','w')
@@ -118,3 +109,4 @@ if __name__== "__main__":
                 test.write(test_tree+'\n')
         except:
             print("--word not found in training data...")
+
