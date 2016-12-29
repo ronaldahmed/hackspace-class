@@ -26,13 +26,12 @@ class Perceptron(LinearClassifier):
         return : w [M x num clases] : parámetros actualizados con instancia actual
         '''
         y_pred = self.get_label(x,w)
-        _lambda = 0.005
 
         if(y != y_pred):
             #Increase features of the truth
-            w[:,y]     += self.learning_rate*x.transpose() + _lambda*w[:,y]
+            w[:,y] += 
             #Decrease features of the prediction
-            w[:,y_pred] -= self.learning_rate*x.transpose() + _lambda*w[:,y_pred]
+            w[:,y_pred] -= 
 
         return w
 

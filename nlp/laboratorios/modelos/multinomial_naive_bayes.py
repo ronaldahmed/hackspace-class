@@ -32,17 +32,19 @@ class MultinomialNaiveBayes(lc.LinearClassifier):
         #  P(w_j|y)
         likelihood = np.zeros((n_words,n_classes))
 
+        # TODO: This is where you have to write your code!
+        # You need to compute the values of the prior and likelihood parameters
+        # and place them in the variables called "prior" and "likelihood".
+        # Examples:
+            # prior[0] is the prior probability of a document being of class 0
+            # likelihood[4, 0] is the likelihood of the fifth(*) feature being active, given that the document is of class 0
+            # (*) recall that Python starts indices at 0, so an index of 4 corresponds to the fifth feature!
 
         ###########################
         for c in range(n_classes):
             docs_in_class,_ = np.nonzero(y==c)
-            prior[c] = 1.0*len(docs_in_class) / n_docs # P(y=c)
-            
-            words_in_class = x[docs_in_class].sum(0) # sum de freq en docs de clase c
-            total_words_in_class = x[docs_in_class].sum() # total de freq en docs de clase c
-
-            likelihood[:,c] = (self.smooth_param + words_in_class) / \
-                              (self.smooth_param*n_words + total_words_in_class)
+            prior[c] =  # P(y=c)
+            likelihood[:,c] = # P(w_j|y)
             
 
         ###########################

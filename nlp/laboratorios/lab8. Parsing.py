@@ -12,7 +12,7 @@ no_bl = re.compile('\n')
 
 ##########################################################################
 RARE = '<RARE>'
-THR = 3
+THR = 2
 
 def replace_leave(tree, vocab):
     if len(tree)>1:
@@ -37,14 +37,12 @@ if __name__== "__main__":
     reader = ancora.AncoraCorpusReader()
     treebank = reader.parsed_sents()
     treebank = [t for t in treebank if len(t.leaves())<15]
-    #treebank = treebank[:100]
     
     # normalizando
     print("Normalizando treebank -> CNF...")
     for t in treebank:
         t.collapse_unary(collapsePOS=True)
         t.chomsky_normal_form()
-    
 
     # dividiendo data
     test_perc = 0.2
@@ -59,6 +57,8 @@ if __name__== "__main__":
         replace_leave(t,vocab)
     for t in test_set:
         replace_leave(t,vocab)
+
+    #ipdb.set_trace()
 
     # Obtener reglas
     print("Leyendo reglas...")

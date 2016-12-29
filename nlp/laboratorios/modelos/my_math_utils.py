@@ -2,7 +2,6 @@ import numpy as np
 from scipy import *
 from scipy.sparse import *
 
-from itertools import izip
 import operator
 
 def sort_dic_by_value (dic,reverse=False):
@@ -75,5 +74,5 @@ def normalize_array(a,direction="column"):
     sums = np.sum(b)
     return np.nan_to_num(b / sums)
   else:
-    print "Error non existing normalization"
+    print("Error non existing normalization")
     return b
